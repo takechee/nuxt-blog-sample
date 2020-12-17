@@ -7,20 +7,21 @@
           <div class="card">
             <header class="card-header">
               <p class="card-header-title">
-                {{ post.title }}
+                {{ post.fields.title }}
               </p>
             </header>
             <div class="card-content">
               <div class="content">
-                {{ post.summary }}
+                {{ post.fields.summary }}
                 <br />
                 <small>
-                  by <strong>{{ post.author }}</strong> \\ {{ post.published }}
+                  by <strong>{{ post.fields.author }}</strong> \\ {{ post.fields.published }}
                 </small>
+                <img :src="post.fields.thumbnail.fields.file.url"/>
               </div>
             </div>
             <footer class="card-footer">
-              <nuxt-link :to="`/post/${post.id}`" class="card-footer-item">
+              <nuxt-link :to="`/post/${post.sys.id}`" class="card-footer-item">
                 Read More
               </nuxt-link>
             </footer>
@@ -31,11 +32,15 @@
   </section>
 </template>
 <script>
-import posts from '~/posts.json'
+
 export default {
-  name: 'posts',
-  data() {
-    return { posts }
+  props: {
+    posts: {
+      type: Array,
+      default: () => {
+        return [];
+      }
+    },
   },
 }
 </script>
